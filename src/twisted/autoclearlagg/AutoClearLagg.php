@@ -92,10 +92,10 @@ class AutoClearLagg extends PluginBase{
         }
         $this->broadcastTimes = $config["times"] ?? [60, 30, 15, 10, 5, 4, 3, 2, 1];
 
-        $this->getScheduler()->scheduleRepeatingTask(new ClosureTask(function($_) : void{
+        $this->getScheduler()->scheduleRepeatingTask(new ClosureTask(function() {
             if(--$this->seconds === 0){
                 $entitiesCleared = 0;
-                foreach($this->getServer()->getLevels() as $level){
+                foreach($this->getServer()->getWorldManager()->getWorlds() as $level){
                     foreach($level->getEntities() as $entity){
                         if($this->clearItems && $entity instanceof ItemEntity){
                             $entity->flagForDespawn();
